@@ -1,5 +1,7 @@
 ### Reproducibility Archive for paper "The Impact of Ordinal Scales on Gaussian Mixture Recovery"
 
+Preprint: https://psyarxiv.com/2cqkj
+
 The below describes how to use the code files in the reproducibility archive to fully reproduce all results in the paper.
 
 #### Simulation Study
