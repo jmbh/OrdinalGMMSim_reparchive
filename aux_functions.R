@@ -9,16 +9,14 @@ makeGGM_KLD <- function(K,
                         target_KLD,
                         maxIter=20,
                         init_range = c(-1, 1),
+                        sig = 0.25,
                         method = "Nelder-Mead",
                         tol = .001,
                         verbose = FALSE) {
 
   # --- Error Function ---
 
-  fn <- function(par, target_KLD, K, p) {
-
-    # fix SD of Gaussians
-    sig <- 0.25
+  fn <- function(par, target_KLD, K, p, sig) {
 
     # Create data structure for mixtures
     Sigma <- list()
@@ -44,7 +42,7 @@ makeGGM_KLD <- function(K,
     }
 
     # Compute Error
-    v_error <-  (v_KLD - target_KLD)^2
+    v_error <- (v_KLD - target_KLD)^2
 
     return(sum(v_error))
 
@@ -52,12 +50,11 @@ makeGGM_KLD <- function(K,
 
   # --- Call Optim ---
 
-  conv_err <- 1
+  conv_err <- 20
   counter <- 1
   while(conv_err > tol) {
 
     n_pars <- K*p # number of mean-parameters
-    # par <- rep(0, n_pars)
     par <- runif(n_pars, min = init_range[1], max = init_range[2])
 
     out <- optim(par = par,
@@ -65,6 +62,7 @@ makeGGM_KLD <- function(K,
                  target_KLD = target_KLD,
                  K = K,
                  p = p,
+                 sig = sig,
                  method = method)
 
 
@@ -72,13 +70,11 @@ makeGGM_KLD <- function(K,
     if(verbose) print(out$value)
     counter <- counter + 1
 
-    if(counter > maxIter) stop("No convergence after maxIter tries.")
+    if(counter > maxIter) stop(paste0("No convergence after ", maxIter," tries."))
 
   }
 
   # --- Put Parameters in List Structure ---
-
-  sig <- 0.25 # fixed sigma
 
   # Check results:
   m_mu_optim <- matrix(out$par, K, p, byrow=TRUE)
@@ -96,6 +92,7 @@ makeGGM_KLD <- function(K,
 
 
 } # eoF
+
 
 # ----------------------------------------------------------------------
 # ----- Plotting Labels in Designs -------------------------------------
@@ -277,17 +274,5 @@ Est_GGM <- function(data, Kseq = 1:5, model="EEE") {
   return(outlist)
 
 } # eoF
-
-
-
-
-
-
-
-
-
-
-
-
 
 

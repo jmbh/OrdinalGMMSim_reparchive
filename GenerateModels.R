@@ -1,10 +1,10 @@
-# jonashaslbeck@gmail.com; Nov 25, 2021
+# jonashaslbeck@protonmail.com; Oct 24th, 2023
 
 # ----------------------------------------------------------------------
 # ----- What are we doing here? ----------------------------------------
 # ----------------------------------------------------------------------
 
-# Here we generate the GMMs varied acros ...
+# Here we generate the GMMs varied across ...
 # - K
 # - pairwise KLD
 # - number of variables
@@ -66,6 +66,7 @@ for(pi in 2:9) { # p=2 is specified below
   }
   print(pi)
 }
+
 
 # ----- For p=2 we choose geometrically nice looking arrangements -----
 

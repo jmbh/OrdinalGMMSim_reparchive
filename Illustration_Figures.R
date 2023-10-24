@@ -12,13 +12,13 @@ library(mclust)
 source("aux_functions_GaussianMix.R")
 
 
+# ----- Load Models -----
+l_GMMs <- readRDS(file="files/l_GMMs.RDS")
+
 # ----------------------------------------------------------------------
 # ----- Illustration A: GMM Arrangements in p = 2 ----------------------
 # ----------------------------------------------------------------------
 
-# ----- Load Models -----
-
-l_GMMs <- readRDS(file="files/l_GMMs.RDS")
 
 sc <- .6
 pdf("figures/Figure2_Kvar_SimSetupV3.pdf", width = 10*sc, height = 9*sc)
@@ -156,6 +156,9 @@ dev.off()
 # ----------------------------------------------------------------------
 # ----- Illustration C: Mapping to Ordinal + Example Run ---------------
 # ----------------------------------------------------------------------
+
+v_cats <- c("cont", 12, 10, 8, 6, 5, 4, 3, 2)
+v_alpha <- c(.05, rep(.0075, 8)) # stronger alpha needed for continuous
 
 # Load Model
 GMM_K2_i <- l_GMMs[[1]][[3]][[1]]
